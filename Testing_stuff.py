@@ -22,19 +22,19 @@ interim_list = []
 
 for year in years:
 
-    # Load CarModel without modifications
-    cm = CarModel(array, cycle='WLTC')
-    # cm.set_all()
-
-    # Load some default values from CarModel
-    energy_battery_mass_default = cm.array.sel(parameter="energy battery mass", powertrain=vehicle_type,
-                                               year=year, size=vehicle_size).values[0]  # kg
-    battery_cell_energy_density_default = cm.array.sel(parameter="battery cell energy density", powertrain=vehicle_type,
-                                                       year=year, size=vehicle_size).values[0]  # kWh/kg
-    battery_cell_mass_share_default = cm.array.sel(parameter="battery cell mass share", powertrain=vehicle_type,
-                                                   year=year, size=vehicle_size).values[0]  # -
-
     for battery_capacity in battery_capacities:
+
+        # Load CarModel without modifications
+        cm = CarModel(array, cycle='WLTC')
+        # cm.set_all()
+
+        # Load some default values from CarModel
+        energy_battery_mass_default = cm.array.sel(parameter="energy battery mass", powertrain=vehicle_type,
+                                                   year=year, size=vehicle_size).values[0]  # kg
+        battery_cell_energy_density_default = cm.array.sel(parameter="battery cell energy density", powertrain=vehicle_type,
+                                                           year=year, size=vehicle_size).values[0]  # kWh/kg
+        battery_cell_mass_share_default = cm.array.sel(parameter="battery cell mass share", powertrain=vehicle_type,
+                                                       year=year, size=vehicle_size).values[0]  # -
 
         # Modify battery capacity
         '''energy_battery_mass = electric_energy_stored / (battery_cell_mass_share * battery_cell_energy_density)'''
