@@ -656,8 +656,7 @@ class InventoryCalculation:
 
         if split == "components":
             cat = [
-                "direct - exhaust",
-                "direct - non-exhaust",
+                "direct",
                 "energy chain",
                 "maintenance",
                 "glider",
@@ -763,40 +762,6 @@ class InventoryCalculation:
         d = {}
         l = []
 
-        # Exhaust emissions
-        d["direct - exhaust"] = [
-            self.inputs[("Carbon dioxide, fossil", ("air",), "kilogram")]
-        ]
-        d["direct - exhaust"].append(
-            self.inputs[("Carbon dioxide, from soil or biomass stock", ("air",), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Cadmium", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Copper", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Chromium", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Nickel", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Selenium", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Zinc", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].append(
-            self.inputs[("Chromium VI", ("air", "urban air close to ground"), "kilogram")]
-        )
-        d["direct - exhaust"].extend(self.index_emissions)
-        d["direct - exhaust"].extend(self.index_noise)
-
-        l.append(d["direct - exhaust"])
-
-        # Non-exhaust emissions
         for cat in csv_dict["components"]:
             d[cat] = list(
                 flatten(
@@ -807,7 +772,6 @@ class InventoryCalculation:
                 )
             )
 
-            """
             if cat == "direct":
                 d[cat].append(
                     self.inputs[("Carbon dioxide, fossil", ("air",), "kilogram")]
@@ -838,7 +802,6 @@ class InventoryCalculation:
                 )
                 d[cat].extend(self.index_emissions)
                 d[cat].extend(self.index_noise)
-            """
 
             l.append(d[cat])
 
