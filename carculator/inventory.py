@@ -630,8 +630,6 @@ class InventoryCalculation:
 
         self.method = method
 
-        self.categories_midpoint = self.get_dict_impact_categories()[self.method]["midpoint"]
-
         # Load the B matrix
         self.B = self.get_B_matrix()
 
