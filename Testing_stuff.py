@@ -1,7 +1,9 @@
 from carculator import *
+import os
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 # Define variables
 years = [2020, 2050]
@@ -10,6 +12,9 @@ battery_production_countries = ["CN", "NO", "RER"]
 methods = ["recipe", "ilcd"]
 vehicle_type = "BEV"
 vehicle_size = "Medium"
+
+# Get current timestamp
+datetime_timestamp = datetime.now()
 
 # Load default car parameters
 cip = CarInputParameters()
@@ -134,7 +139,10 @@ for year in years:
 
                     # Write to csv
                     impact_category_short = ''.join(w[0].upper() for w in impact_category.split())
-                    path = '_EXPORT\\'
+                    folder_timestamp = datetime_timestamp.strftime("%Y%m%d-%H%M%S")
+                    path = '_EXPORT\\' + folder_timestamp + '\\'
+                    if not os.path.exists(path):
+                        os.makedirs(path)
                     filename = str(year) + '_' + method + '_' + impact_category_short + '_' + vehicle_type + '_' + vehicle_size +\
                                '_BattCapacity_' + str(int(round(electric_energy_stored, 0))) + '_kWh_BattCountry_' + str(battery_production_country)
                     results_df.to_csv(path + filename + '.csv', index=False, header=True)
