@@ -95,11 +95,16 @@ for year in years:
                 results = ic.calculate_impacts()
 
                 # To pandas dataframe
-                impact_categories = ic.get_dict_impact_categories()[method]["midpoint"]
+                impact_categories = ic.get_dict_impact_categories()  # [method]["midpoint"]
 
-                for impact_category in impact_categories:
+                for impact_category in impact_categories.keys():
 
-                    results_df = results.sel(impact_category=impact_category, size=vehicle_size,
+                    impact_category_method = impact_categories[impact_category]["method"]
+                    impact_category_name = impact_categories[impact_category]["category"]
+                    impact_category_abbreviation = impact_categories[impact_category]["abbreviation"]
+                    impact_category_unit = impact_categories[impact_category]["unit"]
+
+                    results_df = results.sel(impact_category=impact_category_name, size=vehicle_size,
                                              powertrain=vehicle_type, year=year, value=0)\
                         .to_dataframe('impact')
 
@@ -118,8 +123,8 @@ for year in years:
 
                     # Insert columns
                     results_df.insert(2, "carculator_category", results_df.index, allow_duplicates=True)
-                    results_df.insert(1, "impact_method", [method] * rows_results, allow_duplicates=True)
-                    results_df.insert(3, "impact_category_unit", ['???'] * rows_results, allow_duplicates=True)
+                    results_df.insert(1, "impact_method", [impact_category_method] * rows_results, allow_duplicates=True)
+                    results_df.insert(3, "impact_category_unit", [impact_category_unit] * rows_results, allow_duplicates=True)
                     results_df.insert(1, "Driving_range", [driving_range] * rows_results, allow_duplicates=True)
                     results_df.insert(1, "TtW_energy", [TtW_energy] * rows_results, allow_duplicates=True)
                     results_df.insert(1, "Battery_production_country", [battery_production_country] * rows_results, allow_duplicates=True)
